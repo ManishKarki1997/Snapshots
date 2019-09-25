@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import axiosPlugin from 'axios';
 
-Vue.prototype.$axios=()=>{
+Vue.prototype.$axios = () => {
     axiosPlugin.create({
-        baseURL:`http://localhost:3000/api`
+        baseURL: `https://snapshots-api.manishkarki247.now.sh/api`
     });
 }

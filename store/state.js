@@ -3,7 +3,8 @@ function state() {
         snapshots: [],
         user: {},
         token: '',
-        isLoggedIn: false
+        isLoggedIn: false,
+        viewMode: 'compact'
     }
 }
 

@@ -21,12 +21,13 @@
           class="px-2 py-1 shadow rounded-sm"
         />
       </div>
-      <div>
+      <div class="flex items-center">
         <input
           type="submit"
           value="Login"
           class="cursor-pointer px-3 py-1 rounded-sm bg-blue-800 hover:bg-blue-700 text-white shadow"
         />
+        <img v-if="loggingIn" class="h-6 w-6 ml-4" src="/Images/5.gif" alt="Loading Bar" />
       </div>
     </form>
   </div>
@@ -40,24 +41,28 @@ export default {
       user: {
         username: "",
         password: ""
-      }
+      },
+      loggingIn: false
     };
   },
   methods: {
     async login() {
+      this.loggingIn = true;
       if (this.user.password === "" || this.user.username === "") {
+        this.loggingIn = false;
         return Toast.fire({
           type: "error",
           title: "Fields must not be empty!"
         });
       }
       if (this.user.password.length < 8) {
+        this.loggingIn = false;
+
         return Toast.fire({
           type: "error",
           title: "Password must be at least 8 characters long"
         });
       }
-
       const result = await this.$store.dispatch("login", this.user);
       if (!result.error) {
         this.$store.commit("setUser", {
@@ -66,13 +71,14 @@ export default {
         });
         Toast.fire({
           type: "success",
-          title: "Logged In. Redirecting..."
+          title: "Successfully Loggedin! Redirecting..."
         });
         setTimeout(() => {
           this.$router.push("/");
         }, 1000);
       } else {
-        Toast.fire({
+        this.loggingIn = false;
+        return Toast.fire({
           type: "error",
           title: result.errorLog
         });

@@ -6,9 +6,13 @@
         <h6 class="text-white">{{snapshot.title}}</h6>
       </div>
     </div>
-    <div class="gallery-item-info py-1 lg:flex lg:justify-between">
+    <div class="gallery-item-info py-1 flex justify-between">
       <div class="flex mr-2">
-        <img class="w-8 h-8 rounded-full mr-2" :src="snapshot.user.profileImageURL" alt />
+        <img
+          class="w-8 h-8 rounded-full mr-2"
+          :src="snapshot.user.profileImageURL"
+          alt="User Profile"
+        />
         <h6>{{snapshot.user.name}}</h6>
       </div>
       <div class="flex items-center">

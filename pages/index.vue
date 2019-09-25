@@ -1,8 +1,8 @@
 <template>
   <div class="lg:px-16 px-6 py-4">
-    <div class="flex">
-      <p @click="layoutMode='compact'" class="mr-2 cursor-pointer">C</p>
-      <p @click="layoutMode='free'" class="cursor-pointer">F</p>
+    <div class="lg:flex mb-4 hidden">
+      <p @click="changeViewMode('compact')" class="mr-2 cursor-pointer primary-button">Compact</p>
+      <p @click="changeViewMode('free')" class="cursor-pointer primary-button">Free</p>
     </div>
     <div class="gallery-grid">
       <Snap
@@ -27,12 +27,22 @@ export default {
   data() {
     return {
       snapshots: [],
-      layoutMode: "free"
+      layoutMode: this.$store.state.viewMode
     };
   },
-  async asyncData({ $axios }) {
-    const snapshots = await $axios.$get(`/snap?pageNumber=1`);
-    return { snapshots };
+
+  methods: {
+    changeViewMode(mode) {
+      this.layoutMode = mode;
+      this.$store.commit("changeMode", mode);
+    },
+    async fetchSnapshots() {
+      const snapshots = await this.$axios.$get(`/snap?pageNumber=1`);
+      this.snapshots = snapshots;
+    }
+  },
+  created() {
+    this.fetchSnapshots();
   }
 };
 </script>
@@ -81,5 +91,15 @@ export default {
   width: 100%;
   height: 100%;
   transition: all 0.2s;
+}
+
+@media only screen and (max-width: 470px) {
+  .gallery-grid {
+    grid-column-gap: 0;
+  }
+  .free,
+  .compact {
+    grid-column: span 12;
+  }
 }
 </style>

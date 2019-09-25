@@ -16,12 +16,7 @@
         <input type="file" name="snapshot" id="snapshot" @change="onFileChanged" />
       </div>
       <div class="flex items-center w-full">
-        <input
-          :disabled="isPosting"
-          class="cursor-pointer px-4 py-1 bg-blue-800 rounded-sm mr-2 text-white"
-          type="submit"
-          value="Post"
-        />
+        <input :disabled="isPosting" class="primary-button mr-4" type="submit" value="Post" />
         <img v-if="isPosting" class="h-6 w-6" src="/Images/5.gif" alt="Loading Bar" />
       </div>
     </form>
@@ -67,6 +62,7 @@ export default {
       if (result.error) {
         return this.throwErrorMessage(result.errorLog);
       } else {
+        this.$store.commit("postCreated", result);
         this.snapshot = {};
         setTimeout(() => {
           Toast.fire({

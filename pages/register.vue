@@ -114,7 +114,6 @@ export default {
       this.user.profileImageURL = savedImage.url;
 
       const result = await this.$axios.$post("/user", this.user);
-
       if (result.error) {
         return this.throwErrorMessage(result.errorLog);
       } else {
